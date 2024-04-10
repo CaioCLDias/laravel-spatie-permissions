@@ -1,0 +1,30 @@
+version: '4.2'
+services:
+    project:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            -   8000:8000
+        volumes:
+            -   .:/app
+        command: 'php artisan serve --host=0.0.0.0'
+        depends_on:
+            -   pgsql
+
+    pgsql:
+        image: postgres:latest
+        environment:
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            PGDATA: /data/postgres
+        volumes:
+            - postgres:/data/postgres
+        ports:
+            - "5432:5432"
+        restart: unless-stopped
+
+
+volumes:
+    postgres:
