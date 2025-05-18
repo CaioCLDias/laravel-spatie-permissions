@@ -139,7 +139,7 @@ docker-compose exec project bash
 
 Desenvolvido por [Caio Dias](https://github.com/CaioCLDias)
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-CaioDias-blue?logo=linkedin)](https://www.linkedin.com/in/caiocldias)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-CaioDias-blue?logo=linkedin)](https://www.linkedin.com/in/caio-cesar-lorenzon-dias)
 
 ---
 
