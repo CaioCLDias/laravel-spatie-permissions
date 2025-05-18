@@ -1,66 +1,148 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Spatie Permissions 🔐
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é um exemplo de aplicação **Laravel 12** com autenticação e controle de acesso completo, utilizando o pacote [spatie/laravel-permission](https://github.com/spatie/laravel-permission).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ⚙️ Funcionalidades
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Login com e-mail e senha
+- Controle de usuários com permissões e papéis
+- Proteção de rotas com middleware `can:`
+- CRUD completo para Usuários, Papéis e Permissões
+- Arquitetura de controllers por namespace (Admin/Common)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🧪 Rotas da API
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+> Todas as rotas (exceto login) exigem autenticação com token e validação de permissões via `can:<permission>`.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 🔐 Autenticação
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Método | Rota     | Descrição                      |
+|--------|----------|--------------------------------|
+| POST   | `/login` | Autenticação com e-mail/senha  |
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 👤 Usuários
 
-### Premium Partners
+| Método | Rota             | Permissão necessária | Ação                |
+|--------|------------------|----------------------|---------------------|
+| POST   | `/users`         | `create-user`        | Criar usuário       |
+| PUT    | `/users/{id}`    | `update-user`        | Atualizar usuário   |
+| DELETE | `/users/{id}`    | `delete-user`        | Deletar usuário     |
+| GET    | `/users`         | `read-user`          | Listar usuários     |
+| GET    | `/users/{id}`    | `read-user`          | Ver usuário         |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+### 🛡️ Papéis
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Método | Rota             | Permissão necessária | Ação                |
+|--------|------------------|----------------------|---------------------|
+| POST   | `/roles`         | `create-role`        | Criar papel         |
+| PUT    | `/roles/{id}`    | `update-role`        | Atualizar papel     |
+| DELETE | `/roles/{id}`    | `delete-role`        | Deletar papel       |
+| GET    | `/roles`         | `read-role`          | Listar papéis       |
+| GET    | `/roles/{id}`    | `read-role`          | Ver papel           |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### ✅ Permissões
 
-## Security Vulnerabilities
+| Método | Rota             | Permissão necessária | Ação                |
+|--------|------------------|----------------------|---------------------|
+| GET    | `/permissions`   | `read-permission`    | Listar permissões   |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🛠️ Instalação Local
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+git clone https://github.com/CaioCLDias/laravel-spatie-permissions.git
+cd laravel-spatie-permissions
+cp .env.example .env
+composer install
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+```
+
+---
+
+## 🐳 Executando com Docker
+
+O projeto já está configurado com **Docker** e **PostgreSQL** via Docker Compose.
+
+### Pré-requisitos
+
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+### Subir o ambiente
+
+```bash
+docker-compose up --build
+```
+
+Acesse a aplicação em: [http://localhost:8000](http://localhost:8000)
+
+---
+
+### Variáveis de Ambiente
+
+No `.env`, configure os dados do PostgreSQL:
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=pgsql
+DB_PORT=5432
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=secret
+```
+
+> Essas variáveis são utilizadas automaticamente pelo `docker-compose`.
+
+---
+
+### Comandos Úteis com Docker
+
+```bash
+docker-compose exec project php artisan migrate --seed
+docker-compose exec project composer install
+docker-compose exec project bash
+```
+
+---
+
+## 🔑 Usuários de Exemplo
+
+| Papel   | E-mail              | Senha     |
+|---------|---------------------|-----------|
+| Admin   | admin@example.com   | password  |
+| Editor  | editor@example.com  | password  |
+| Usuário | user@example.com    | password  |
+
+---
+
+## 📚 Referências
+
+- [Spatie Laravel Permission Docs](https://spatie.be/docs/laravel-permission)
+- [Laravel Documentation](https://laravel.com/docs)
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por [Caio Dias](https://github.com/CaioCLDias)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-CaioDias-blue?logo=linkedin)](https://www.linkedin.com/in/caiocldias)
+
+---
+
+## 📝 Licença
+
+Distribuído sob a licença [MIT](LICENSE).
